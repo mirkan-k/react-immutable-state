@@ -13,9 +13,7 @@ function App() {
   }
   
   const deleteWorkout = (workout) => {
-    const workoutsWithoutDeleteTarget = workouts.filter((workoutItem) => {
-      return workoutItem !== workout
-    })
+    const workoutsWithoutDeleteTarget = workouts.filter(workoutItem => workoutItem !== workout)
     setWorkouts(workoutsWithoutDeleteTarget)
   }
   
