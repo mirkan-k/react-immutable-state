@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import {initialWorkouts, generateWorkout} from "./Workouts.js"
 import "./App.css"
 
@@ -7,15 +7,26 @@ function App() {
 
   const addNewWorkout = () => {
     const newWorkout = generateWorkout()
-    console.log("addNewWorkout:", newWorkout)
+    const newWorkouts = [...workouts, newWorkout]
+    setWorkouts(newWorkouts)
+    // test()
   }
-
+  
   const deleteWorkout = (workout) => {
-    console.log("deleteWorkout:", workout)
+    const workoutsWithoutDeleteTarget = workouts.filter((workoutItem) => {
+      return workoutItem !== workout
+    })
+    setWorkouts(workoutsWithoutDeleteTarget)
   }
-
+  
   const completeWorkout = (workout) => {
-    console.log("completeWorkout:", workout)
+    const updatedWorkouts = workouts.map((workoutItem) => {
+      if (workoutItem === workout) {
+        return {...workoutItem, done: true}
+      }
+      return workoutItem
+    })
+    setWorkouts(updatedWorkouts)
   }
 
   return (
@@ -33,6 +44,7 @@ function App() {
             {workout.done && 
              <p>✅</p>}
             <button onClick={e=>deleteWorkout(workout)}>Delete</button>
+            <button onClick={() => console.log("workouts:", workouts)}>log workouts</button>
           </li>
         ))}
       </ul>
@@ -40,5 +52,10 @@ function App() {
     </div>
   )
 }
-
+  // const test = () => {
+  //   const timer = setTimeout(() => {
+  //     console.log("workouts:", workouts)
+  //   }, 2000);
+  //   return () => clearTimeout(timer);
+  // };
 export default App
